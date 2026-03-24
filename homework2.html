@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Superstar Clinic - Patient Registration</title>
+<link rel="stylesheet" href="style.css">
+
+<script>
+function displayDate() {
+  document.getElementById("date").innerHTML = new Date().toDateString();
+}
+
+/* Slider */
+function updateSlider(val) {
+  document.getElementById("sliderValue").innerText = val;
+}
+
+/* Review Button */
+function reviewForm() {
+  let f = document.forms["myForm"];
+
+  let output = `
+  <h3>PLEASE REVIEW THIS INFORMATION</h3>
+
+  <p><b>Name:</b> ${f.fname.value} ${f.mi.value} ${f.lname.value}</p>
+  <p><b>DOB:</b> ${f.dob.value}</p>
+  <p><b>Email:</b> ${f.email.value}</p>
+  <p><b>Phone:</b> ${f.phone.value}</p>
+
+  <p><b>Address:</b><br>
+  ${f.addr1.value} ${f.addr2.value}<br>
+  ${f.city.value}, ${f.state.value} ${f.zip.value}</p>
+
+  <p><b>Conditions:</b>
+  ${f.diabetes.checked ? "Diabetes " : ""}
+  ${f.asthma.checked ? "Asthma " : ""}
+  ${f.heart.checked ? "Heart Disease " : ""}
+  ${f.allergy.checked ? "Allergies " : ""}
+  </p>
+
+  <p><b>Gender:</b> ${f.gender.value}</p>
+  <p><b>Vaccinated:</b> ${f.vax.value}</p>
+
+  <p><b>User ID:</b> ${f.userid.value}</p>
+  `;
+
+  document.getElementById("reviewSection").innerHTML = output;
+}
+
+/* Password Validation */
+function validateForm() {
+  let f = document.forms["myForm"];
+
+  let pw = f.password.value;
+  let pw2 = f.password2.value;
+  let user = f.userid.value.toLowerCase();
+
+  f.userid.value = user;
+
+  let pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,30}$/;
+
+  if (!pattern.test(pw)) {
+    alert("Password must be 8–30 chars with upper, lower, number, special char.");
+    return false;
+  }
+
+  if (pw !== pw2) {
+    alert("Passwords do not match!");
+    return false;
+  }
+
+  if (pw.includes(user)) {
+    alert("Password cannot contain your User ID!");
+    return false;
+  }
+
+  return true;
+}
+</script>
+</head>
+
+<body onload="displayDate()">
+
+<div id="header">
+  <h1>Superstar Clinic</h1>
+  <p id="date"></p>
+</div>
+
+<div id="main">
+<h2>Patient Registration Form</h2>
+
+<div class="form-container">
+<form name="myForm" action="thankyou.html" onsubmit="return validateForm()">
+
+<table>
+
+<tr>
+<td>First Name:</td>
+<td><input name="fname" pattern="[A-Za-z'-]{1,30}" title="Letters only" required></td>
+
+<td>MI:</td>
+<td><input name="mi" pattern="[A-Za-z]{0,1}"></td>
+
+<td>Last Name:</td>
+<td><input name="lname" pattern="[A-Za-z0-9'-]{1,30}" required></td>
+</tr>
+
+<tr>
+<td>DOB:</td>
+<td><input type="date" name="dob" required></td>
+
+<td>SSN:</td>
+<td><input type="password" name="ssn" required></td>
+</tr>
+
+<tr>
+<td>Address 1:</td>
+<td><input name="addr1" required></td>
+
+<td>Address 2:</td>
+<td><input name="addr2"></td>
+</tr>
+
+<tr>
+<td>City:</td>
+<td><input name="city" required></td>
+
+<td>State:</td>
+<td>
+<select name="state" required>
+<option value="">Select</option>
+<option>TX</option><option>CA</option><option>NY</option>
+</select>
+</td>
+
+<td>Zip:</td>
+<td><input name="zip" pattern="\d{5}(-\d{4})?" required></td>
+</tr>
+
+<tr>
+<td>Email:</td>
+<td><input type="email" name="email" required></td>
+
+<td>Phone:</td>
+<td><input name="phone" pattern="\d{3}-\d{3}-\d{4}"></td>
+</tr>
+
+<tr>
+<td>User ID:</td>
+<td><input name="userid" pattern="^[a-zA-Z][a-zA-Z0-9_-]{4,29}$" required></td>
+</tr>
+
+<tr>
+<td>Password:</td>
+<td><input type="password" name="password" required></td>
+
+<td>Re-enter:</td>
+<td><input type="password" name="password2" required></td>
+</tr>
+
+<tr>
+<td>Conditions:</td>
+<td colspan="5">
+<input type="checkbox" name="diabetes"> Diabetes
+<input type="checkbox" name="asthma"> Asthma
+<input type="checkbox" name="heart"> Heart Disease
+<input type="checkbox" name="allergy"> Allergies
+</td>
+</tr>
+
+<tr>
+<td>Gender:</td>
+<td colspan="5">
+<input type="radio" name="gender" value="Male"> Male
+<input type="radio" name="gender" value="Female"> Female
+<input type="radio" name="gender" value="Other"> Other
+</td>
+</tr>
+
+<tr>
+<td>Vaccinated:</td>
+<td colspan="5">
+<input type="radio" name="vax" value="Yes"> Yes
+<input type="radio" name="vax" value="No"> No
+</td>
+</tr>
+
+<tr>
+<td>Health Scale:</td>
+<td colspan="5">
+<input type="range" min="1" max="10" oninput="updateSlider(this.value)">
+<span id="sliderValue">5</span>
+</td>
+</tr>
+
+<tr>
+<td colspan="6" style="text-align:center;">
+<input type="button" value="REVIEW" onclick="reviewForm()">
+<input type="submit" value="SUBMIT">
+<input type="reset" value="CLEAR">
+</td>
+</tr>
+
+</table>
+</form>
+</div>
+
+<!-- REVIEW SECTION -->
+<div id="reviewSection" class="review-container"></div>
+
+</div>
+
+<div id="footer">
+<p>Superstar Clinic - Houston TX</p>
+</div>
+
+</body>
+</html>

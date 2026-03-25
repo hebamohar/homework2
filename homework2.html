@@ -320,25 +320,75 @@ oninput="updateSlider(this.value)" />
 <tr>
 <td colspan="6" style="text-align:center">
 
-<input type="reset" value="CLEAR AND START OVER" />
-<input type="submit" value="Submit" />
+<tr>
+            <td>Medical Conditions:</td>
+            <td colspan="5">
+              <input type="checkbox" name="cond1"> Diabetes
+              <input type="checkbox" name="cond2"> Hypertension
+              <input type="checkbox" name="cond3"> Asthma
+              <input type="checkbox" name="cond4"> Heart Disease
+              <input type="checkbox" name="cond5"> Allergies
+            </td>
+          </tr>
 
-</td>
-</tr>
+          <tr>
+            <td>Gender:</td>
+            <td colspan="5">
+              <input type="radio" name="gender" value="Male"> Male
+              <input type="radio" name="gender" value="Female"> Female
+              <input type="radio" name="gender" value="Other"> Other
+            </td>
+          </tr>
 
-</table>
-</form>
-</div>
-</div>
+          <tr>
+            <td>Vaccinated:</td>
+            <td colspan="5">
+              <input type="radio" name="vaccinated" value="Yes"> Yes
+              <input type="radio" name="vaccinated" value="No"> No
+            </td>
+          </tr>
 
-<div id="footer">
-<p><strong>Superstar Clinic</strong></p>
-<p>PO Box 7392</p>
-<p>Houston, Texas 77009</p>
-<button onclick="alert('Please call us at 832-791-0124')">
-Contact Us
-</button>
-</div>
+          <tr>
+            <td>Do You Have Insurance?</td>
+            <td colspan="5">
+              <input type="radio" name="insurance" value="Yes"> Yes
+              <input type="radio" name="insurance" value="No"> No
+            </td>
+          </tr>
+
+          <tr>
+            <td>Health Scale (1-10):</td>
+            <td colspan="5">
+              <input type="range" min="1" max="10" oninput="updateSlider(this.value)" />
+              <span id="sliderValue">5</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="6" style="text-align: center;">
+              <input type="button" value="REVIEW" onclick="reviewForm()" />
+              <input type="reset" value="CLEAR AND START OVER" />
+              <input type="submit" value="Submit" />
+            </td>
+          </tr>
+
+        </table>
+      </form>
+    </div>
+
+    <!-- ADDED REVIEW SECTION -->
+    <div id="reviewSection" class="review-container"></div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div id="footer">
+    <p><strong>Superstar Clinic</strong></p>
+    <p>PO Box 7392</p>
+    <p>Houston, Texas 77009</p>
+    <button onclick="alert('Please call us at 832-791-0124')">Contact Us</button>
+  </div>
 
 </body>
 </html>
+

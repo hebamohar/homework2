@@ -1,7 +1,7 @@
 /*
 Author: Heba Mohar
 File: style.css
-Purpose: MIS 3371 homework 1 style sheet for Superstar Clinic
+Purpose: MIS 3371 homework 2 style sheet for Superstar Clinic
 */
 
 
@@ -179,7 +179,7 @@ input[type="button"]:hover {
   font-size: 16px;
 }
 
-/* Error message styling (Homework 2 validation) */
+
 .error {
   color: red;
   font-size: 12px;

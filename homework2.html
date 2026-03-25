@@ -49,24 +49,17 @@
       document.getElementById("reviewSection").innerHTML = output;
     }
 
-    function clearErrors(){
-      document.querySelectorAll(".error").forEach(e => e.textContent = "");
-    }
-
     function validateForm(){
-      clearErrors();
       let f = document.forms["patientForm"];
-      let valid = true;
 
       let password = f.password.value;
       let confirmPassword = f.password2.value;
 
-      let pattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#%^&*()\-\_\+=\\\/><.,~`])[A-Za-z\d!@#%^&*()\-\_\+=\\\/><.,~`]{8,}$/;
+      let passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#%^&*()\-\_\+=\\\/><.,~`])[A-Za-z\d!@#%^&*()\-\_\+=\\\/><.,~`]{8,}$/;
 
-      if(!pattern.test(password)){
-        document.getElementById("passError").textContent =
-          "Must include upper, lower, number, special char (no quotes)";
-        valid = false;
+      if(!passwordPattern.test(password)){
+        alert("Password must be at least 8 characters and include:\n- 1 uppercase letter\n- 1 lowercase letter\n- 1 number\n- 1 special character (!@#%^&*()-_+=\\/><.,~`)\nNO quotes allowed.");
+        return false;
       }
 
       let user = f.userid.value.toLowerCase();
@@ -75,43 +68,39 @@
       let passLower = password.toLowerCase();
 
       if(passLower.includes(user)){
-        document.getElementById("passError").textContent =
-          "Password cannot contain User ID";
-        valid = false;
+        alert("Password cannot contain your User ID.");
+        return false;
       }
 
       if(passLower.includes(fname)){
-        document.getElementById("passError").textContent =
-          "Password cannot contain first name";
-        valid = false;
+        alert("Password cannot contain your first name.");
+        return false;
       }
 
       if(passLower.includes(lname)){
-        document.getElementById("passError").textContent =
-          "Password cannot contain last name";
-        valid = false;
+        alert("Password cannot contain your last name.");
+        return false;
       }
 
       if(password !== confirmPassword){
-        document.getElementById("pass2Error").textContent =
-          "Passwords do not match";
-        valid = false;
+        alert("Passwords do not match.");
+        return false;
       }
 
       let userPattern = /^[a-zA-Z][a-zA-Z0-9_]{4,14}$/;
       if(!userPattern.test(f.userid.value)){
-        document.getElementById("userError").textContent =
-          "User ID must start with letter (5–15 chars)";
-        valid = false;
+        alert("User ID must:\n- Start with a letter\n- Be 5–15 characters\n- Contain only letters, numbers, or underscore");
+        return false;
       }
 
-      return valid;
+      return true;
     }
   </script>
 </head>
 
 <body onload="displayDate()">
 
+  <!-- HEADER -->
   <div id="header">
     <div class="header-content">
       <img src="logo.jpg" alt="Superstar Clinic Logo" class="logo" />
@@ -122,6 +111,7 @@
     </div>
   </div>
 
+  <!-- MAIN -->
   <div id="main">
     <h2>New Patient Registration Form</h2>
 
@@ -131,44 +121,36 @@
 
           <tr>
             <td>First Name:</td>
-            <td>
-              <input name="fname" type="text" maxlength="30" required pattern="[A-Za-z]+" title="Letters only" placeholder="John" />
-            </td>
+            <td><input name="fname" type="text" maxlength="30" required title="Letters only" pattern="[A-Za-z]+" placeholder="John" /></td>
 
             <td>Middle Initial:</td>
-            <td>
-              <input name="mi" type="text" maxlength="1" pattern="[A-Za-z]" title="One letter" placeholder="M" />
-            </td>
+            <td><input name="mi" type="text" maxlength="1" title="One letter" pattern="[A-Za-z]" placeholder="M" /></td>
 
             <td>Last Name:</td>
-            <td>
-              <input name="lname" type="text" maxlength="30" required pattern="[A-Za-z]+" title="Letters only" placeholder="Smith" />
-            </td>
+            <td><input name="lname" type="text" maxlength="30" required title="Letters only" pattern="[A-Za-z]+" placeholder="Smith" /></td>
           </tr>
 
           <tr>
             <td>Date of Birth (MM/DD/YYYY):</td>
             <td>
-              <input name="dob" type="text" pattern="\d{2}/\d{2}/\d{4}" placeholder="MM/DD/YYYY" required title="MM/DD/YYYY" />
+              <input name="dob" type="text" pattern="\d{2}/\d{2}/\d{4}" placeholder="MM/DD/YYYY" required title="Format: MM/DD/YYYY" />
             </td>
 
             <td>Social Security:</td>
-            <td>
-              <input type="password" maxlength="11" required pattern="\d{3}-\d{2}-\d{4}" placeholder="123-45-6789" title="123-45-6789" />
-            </td>
+            <td><input type="password" maxlength="11" required title="Format: 123-45-6789" pattern="\d{3}-\d{2}-\d{4}" placeholder="123-45-6789" /></td>
           </tr>
 
           <tr>
             <td>Address Line 1:</td>
-            <td><input name="addr1" type="text" maxlength="30" required placeholder="123 Main St" /></td>
+            <td><input name="addr1" type="text" maxlength="30" required title="Street address" placeholder="123 Main St" /></td>
 
             <td>Address Line 2:</td>
-            <td><input name="addr2" type="text" maxlength="30" placeholder="Apt 4" /></td>
+            <td><input name="addr2" type="text" maxlength="30" title="Apartment or unit" placeholder="Apt 4" /></td>
           </tr>
 
           <tr>
             <td>City:</td>
-            <td><input name="city" type="text" maxlength="30" required pattern="[A-Za-z ]+" placeholder="Houston" /></td>
+            <td><input name="city" type="text" maxlength="30" required title="Letters only" pattern="[A-Za-z ]+" placeholder="Houston" /></td>
 
             <td>State:</td>
             <td>
@@ -229,40 +211,86 @@
             </td>
 
             <td>Zip Code:</td>
-            <td>
-              <input name="zip" type="text" pattern="[0-9]{5,10}" required placeholder="77009" />
-            </td>
+            <td><input name="zip" type="text" pattern="[0-9]{5,10}" required title="5-10 digits" placeholder="77009" /></td>
           </tr>
 
           <tr>
             <td>Email Address:</td>
-            <td><input name="email" type="email" required placeholder="name@email.com" /></td>
+            <td><input name="email" type="email" required title="Enter valid email" placeholder="name@email.com" /></td>
 
             <td>Phone Number:</td>
-            <td><input name="phone" type="text" pattern="\d{3}-\d{3}-\d{4}" placeholder="713-555-1212" /></td>
+            <td><input name="phone" type="text" pattern="\d{3}-\d{3}-\d{4}" title="Format: 713-555-1212" placeholder="713-555-1212" /></td>
           </tr>
 
           <tr>
             <td>User ID:</td>
-            <td>
-              <input name="userid" type="text" required pattern="^[a-zA-Z][a-zA-Z0-9_]{4,14}$" placeholder="username123" />
-              <span id="userError" class="error"></span>
-            </td>
+            <td><input name="userid" type="text" required title="5-15 chars, start with letter" pattern="^[a-zA-Z][a-zA-Z0-9_]{4,14}$" placeholder="username123" /></td>
           </tr>
 
           <tr>
             <td>Password:</td>
-            <td>
-              <input name="password" type="password" required
-                pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#%^&*()\-\_\+=\\\/><.,~`])[A-Za-z\d!@#%^&*()\-\_\+=\\\/><.,~`]{8,}$"
-                placeholder="Strong password" />
-              <span id="passError" class="error"></span>
-            </td>
+            <td><input name="password" type="password" required title="8+ chars, upper, lower, number, special (no quotes)" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#%^&*()\-\_\+=\\\/><.,~`])[A-Za-z\d!@#%^&*()\-\_\+=\\\/><.,~`]{8,}$" placeholder="Strong password" /></td>
 
             <td>Re-enter Password:</td>
-            <td>
-              <input name="password2" type="password" required placeholder="Re-enter password" />
-              <span id="pass2Error" class="error"></span>
+            <td><input name="password2" type="password" required title="Must match password" placeholder="Re-enter password" /></td>
+          </tr>
+
+          <tr>
+            <td>Describe Current Symptoms:</td>
+            <td colspan="5">
+              <textarea rows="3" cols="50"></textarea>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Medical Conditions:</td>
+            <td colspan="5">
+              <input type="checkbox" name="cond1"> Diabetes
+              <input type="checkbox" name="cond2"> Hypertension
+              <input type="checkbox" name="cond3"> Asthma
+              <input type="checkbox" name="cond4"> Heart Disease
+              <input type="checkbox" name="cond5"> Allergies
+            </td>
+          </tr>
+
+          <tr>
+            <td>Gender:</td>
+            <td colspan="5">
+              <input type="radio" name="gender" value="Male"> Male
+              <input type="radio" name="gender" value="Female"> Female
+              <input type="radio" name="gender" value="Other"> Other
+            </td>
+          </tr>
+
+          <tr>
+            <td>Vaccinated:</td>
+            <td colspan="5">
+              <input type="radio" name="vaccinated" value="Yes"> Yes
+              <input type="radio" name="vaccinated" value="No"> No
+            </td>
+          </tr>
+
+          <tr>
+            <td>Do You Have Insurance?</td>
+            <td colspan="5">
+              <input type="radio" name="insurance" value="Yes"> Yes
+              <input type="radio" name="insurance" value="No"> No
+            </td>
+          </tr>
+
+          <tr>
+            <td>Health Scale (1-10):</td>
+            <td colspan="5">
+              <input type="range" min="1" max="10" oninput="updateSlider(this.value)" />
+              <span id="sliderValue">5</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="6" style="text-align: center;">
+              <input type="button" value="REVIEW" onclick="reviewForm()" />
+              <input type="reset" value="CLEAR AND START OVER" />
+              <input type="submit" value="Submit" />
             </td>
           </tr>
 
@@ -273,9 +301,9 @@
     <div id="reviewSection" class="review-container"></div>
 
   </div>
-
-    <!-- FOOTER -->
-    <div id="footer">
+  
+  <!-- FOOTER -->  
+  <div id="footer">
     <p><strong>Superstar Clinic</strong></p>
     <p>PO Box 7392</p>
     <p>Houston, Texas 77009</p>

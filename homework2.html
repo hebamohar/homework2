@@ -53,31 +53,44 @@
     function validateForm(){
       let f = document.forms["patientForm"];
 
+      let password = f.password.value;
+      let confirmPassword = f.password2.value;
+
       let passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#%^&*()\-\_\+=\\\/><.,~`])[A-Za-z\d!@#%^&*()\-\_\+=\\\/><.,~`]{8,}$/;
 
-      if(!passwordPattern.test(f.password.value)){
-        alert("Password must be at least 8 characters and include uppercase, lowercase, number, and special character (no quotes).");
+      if(!passwordPattern.test(password)){
+        alert("Password must be at least 8 characters and include:\n- 1 uppercase letter\n- 1 lowercase letter\n- 1 number\n- 1 special character (!@#%^&*()-_+=\\/><.,~`)\nNO quotes allowed.");
         return false;
       }
 
       let user = f.userid.value.toLowerCase();
       let fname = f.fname.value.toLowerCase();
       let lname = f.lname.value.toLowerCase();
-      let pass = f.password.value.toLowerCase();
+      let passLower = password.toLowerCase();
 
-      if(pass.includes(user) || pass.includes(fname) || pass.includes(lname)){
-        alert("Password cannot contain your User ID, first name, or last name.");
+      if(passLower.includes(user)){
+        alert("Password cannot contain your User ID.");
         return false;
       }
 
-      if(f.password.value !== f.password2.value){
-        alert("Passwords do not match");
+      if(passLower.includes(fname)){
+        alert("Password cannot contain your first name.");
+        return false;
+      }
+
+      if(passLower.includes(lname)){
+        alert("Password cannot contain your last name.");
+        return false;
+      }
+
+      if(password !== confirmPassword){
+        alert("Passwords do not match.");
         return false;
       }
 
       let userPattern = /^[a-zA-Z][a-zA-Z0-9_]{4,14}$/;
       if(!userPattern.test(f.userid.value)){
-        alert("User ID must start with a letter and be 5-15 characters (letters, numbers, underscore only).");
+        alert("User ID must:\n- Start with a letter\n- Be 5–15 characters\n- Contain only letters, numbers, or underscore");
         return false;
       }
 

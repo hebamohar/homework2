@@ -37,7 +37,6 @@
       if(f.cond5.checked) conditions += "Allergies ";
 
       let output = `
-        <h3>PLEASE REVIEW THIS INFORMATION</h3>
         <p><b>Name:</b> ${f.fname.value} ${f.mi.value} ${f.lname.value}</p>
         <p><b>DOB:</b> ${f.dob.value}</p>
         <p><b>Email:</b> ${f.email.value}</p>
@@ -101,7 +100,6 @@
 
 <body onload="displayDate()">
 
-  <!-- HEADER -->
   <div id="header">
     <div class="header-content">
       <img src="logo.jpg" alt="Superstar Clinic Logo" class="logo" />
@@ -112,7 +110,6 @@
     </div>
   </div>
 
-  <!-- MAIN -->
   <div id="main">
     <h2>New Patient Registration Form</h2>
 
@@ -122,23 +119,28 @@
 
           <tr>
             <td>First Name:</td>
-            <td><input name="fname" type="text" maxlength="30" required title="Letters only" pattern="[A-Za-z]+" placeholder="John" /></td>
+            <td><input name="fname" type="text" maxlength="30" required title="Letters only" pattern="[A-Za-z]+" placeholder="John"
+              oninvalid="this.setCustomValidity('First name must contain letters only')" oninput="this.setCustomValidity('')" /></td>
 
             <td>Middle Initial:</td>
-            <td><input name="mi" type="text" maxlength="1" title="One letter" pattern="[A-Za-z]" placeholder="M" /></td>
+            <td><input name="mi" type="text" maxlength="1" title="One letter" pattern="[A-Za-z]" placeholder="M"
+              oninvalid="this.setCustomValidity('Enter one letter')" oninput="this.setCustomValidity('')" /></td>
 
             <td>Last Name:</td>
-            <td><input name="lname" type="text" maxlength="30" required title="Letters only" pattern="[A-Za-z]+" placeholder="Smith" /></td>
+            <td><input name="lname" type="text" maxlength="30" required title="Letters only" pattern="[A-Za-z]+" placeholder="Smith"
+              oninvalid="this.setCustomValidity('Last name must contain letters only')" oninput="this.setCustomValidity('')" /></td>
           </tr>
 
           <tr>
             <td>Date of Birth (MM/DD/YYYY):</td>
             <td>
-              <input name="dob" type="text" pattern="\d{2}/\d{2}/\d{4}" placeholder="MM/DD/YYYY" required title="Format: MM/DD/YYYY" />
+              <input name="dob" type="text" pattern="\d{2}/\d{2}/\d{4}" placeholder="MM/DD/YYYY" required title="Format: MM/DD/YYYY"
+              oninvalid="this.setCustomValidity('Enter date as MM/DD/YYYY')" oninput="this.setCustomValidity('')" />
             </td>
 
             <td>Social Security:</td>
-            <td><input type="password" maxlength="11" required title="Format: 123-45-6789" pattern="\d{3}-\d{2}-\d{4}" placeholder="123-45-6789" /></td>
+            <td><input type="password" maxlength="11" required title="Format: 123-45-6789" pattern="\d{3}-\d{2}-\d{4}" placeholder="123-45-6789"
+              oninvalid="this.setCustomValidity('Enter SSN as 123-45-6789')" oninput="this.setCustomValidity('')" /></td>
           </tr>
 
           <tr>
@@ -151,12 +153,14 @@
 
           <tr>
             <td>City:</td>
-            <td><input name="city" type="text" maxlength="30" required title="Letters only" pattern="[A-Za-z ]+" placeholder="Houston" /></td>
+            <td><input name="city" type="text" maxlength="30" required title="Letters only" pattern="[A-Za-z ]+" placeholder="Houston"
+              oninvalid="this.setCustomValidity('City must contain letters only')" oninput="this.setCustomValidity('')" /></td>
 
             <td>State:</td>
             <td>
               <select name="state" required>
                 <option value="">Select</option>
+                <!-- FULL LIST KEPT EXACTLY -->
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
                 <option value="AZ">Arizona</option>
@@ -212,28 +216,36 @@
             </td>
 
             <td>Zip Code:</td>
-            <td><input name="zip" type="text" pattern="[0-9]{5,10}" required title="5-10 digits" placeholder="77009" /></td>
+            <td><input name="zip" type="text" pattern="[0-9]{5,10}" required title="5-10 digits" placeholder="77009"
+              oninvalid="this.setCustomValidity('Zip must be 5-10 digits')" oninput="this.setCustomValidity('')" /></td>
           </tr>
 
           <tr>
             <td>Email Address:</td>
-            <td><input name="email" type="email" required title="Enter valid email" placeholder="name@email.com" /></td>
+            <td><input name="email" type="email" required title="Enter valid email" placeholder="name@email.com"
+              oninvalid="this.setCustomValidity('Enter a valid email')" oninput="this.setCustomValidity('')" /></td>
 
             <td>Phone Number:</td>
-            <td><input name="phone" type="text" pattern="\d{3}-\d{3}-\d{4}" title="Format: 713-555-1212" placeholder="713-555-1212" /></td>
+            <td><input name="phone" type="text" pattern="\d{3}-\d{3}-\d{4}" title="Format: 713-555-1212" placeholder="713-555-1212"
+              oninvalid="this.setCustomValidity('Format: 713-555-1212')" oninput="this.setCustomValidity('')" /></td>
           </tr>
 
           <tr>
             <td>User ID:</td>
-            <td><input name="userid" type="text" required title="5-15 chars, start with letter" pattern="^[a-zA-Z][a-zA-Z0-9_]{4,14}$" placeholder="username123" /></td>
+            <td><input name="userid" type="text" required title="5-15 chars, start with letter" pattern="^[a-zA-Z][a-zA-Z0-9_]{4,14}$" placeholder="username123"
+              oninvalid="this.setCustomValidity('User ID must start with a letter and be 5-15 characters')" oninput="this.setCustomValidity('')" /></td>
           </tr>
 
           <tr>
             <td>Password:</td>
-            <td><input name="password" type="password" required title="8+ chars, upper, lower, number, special (no quotes)" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#%^&*()\-\_\+=\\\/><.,~`])[A-Za-z\d!@#%^&*()\-\_\+=\\\/><.,~`]{8,}$" placeholder="Strong password" /></td>
+            <td><input name="password" type="password" required title="8+ chars, upper, lower, number, special (no quotes)"
+              pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#%^&*()\-\_\+=\\\/><.,~`])[A-Za-z\d!@#%^&*()\-\_\+=\\\/><.,~`]{8,}$"
+              placeholder="Strong password"
+              oninvalid="this.setCustomValidity('Password must include upper, lower, number, special character and no quotes')" oninput="this.setCustomValidity('')" /></td>
 
             <td>Re-enter Password:</td>
-            <td><input name="password2" type="password" required title="Must match password" placeholder="Re-enter password" /></td>
+            <td><input name="password2" type="password" required title="Must match password" placeholder="Re-enter password"
+              oninvalid="this.setCustomValidity('Passwords must match')" oninput="this.setCustomValidity('')" /></td>
           </tr>
 
           <tr>
